@@ -5,21 +5,28 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   font-style: normal;
   text-decoration: none;
   border: none;
-  color: #313131;
+  color: #666;
   box-sizing: border-box;
   font-weight: lighter;
-  font-family: 'Microsoft YaHei';
+  font-family: "Microsoft Yahei",sans-serif;
   -webkit-tap-highlight-color:transparent;
   &:focus {
       outline: none;
   }
 }
 
+input[type="button"], input[type="submit"], input[type="search"], input[type="reset"] {
+  -webkit-appearance: none;
+}
 
-html{
+textarea {  -webkit-appearance: none;}   
+
+html,body{
   height: 100%;
   width: 100%;
+  background-color: #f2f2f2;
 }
+
 
 .clear:after{
   content: '';
@@ -28,6 +35,8 @@ html{
 }
 
 .clear{
+  // zoom:1 属性是IE浏览器的专有属性，Firefox的等其他浏览器不支持。它可以设置或检索对象的缩放比例。
+  // 除此之外，还可以触发IE的hasLayout属性，清除浮动，清除margin的重叠等。
   zoom:1;
 }
 
@@ -54,4 +63,10 @@ html{
 
 .show{
   display: block;
+}
+
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
