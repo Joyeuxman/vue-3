@@ -1,7 +1,7 @@
 <template>
   <div>
     <head-top signin-up="home">
-      <router-link class="head_logo" to='/home' slot='logo'>饿了吗</router-link>
+      <span class="head_logo" @click="reload" slot='logo'>饿了吗</span>
     </head-top>
     <nav class="city_nav">
       <div class="city_tip">
@@ -77,6 +77,12 @@ export default {
         }
       }
       return sortobj;
+    }
+  },
+  methods:{
+    // 点击饿了吗刷新页面
+    reload(){
+      window.location.reload();
     }
   }
 }

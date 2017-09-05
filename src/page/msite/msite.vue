@@ -129,7 +129,7 @@ export default {
   border-bottom: 0.025rem solid $bordercolor;
   background-color: #fff;
   .swiper-container {
-    padding-bottom: 0.025rem solid $bordercolor;
+    padding-bottom: 0.6rem;
     @include wh(100%, auto);
     .swiper-pagination {
       bottom: 0.2rem;

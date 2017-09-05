@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/mixin';
 #head_top {
-  z-index:9999999999999;
+  z-index: 9999999999999;
   position: fixed;
   left: 0;
   top: 0;
@@ -46,9 +46,8 @@ export default {
 
 .head_goback {
   left: 0.4rem;
-  @include wh(0.375rem, 0.7rem);
+  @include wh(0.6rem, 0.8rem);
   @include center-top;
-  @include backimg('../../images/icon_back.png');
 }
 
 .head_login {
