@@ -1,9 +1,17 @@
 <template>
   <header id="head_top">
     <slot name="logo" />
-    <div class="head_goback" v-if="goBack" @click="$router.go(-1)"></div>
+    <slot name="search" />
+    <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:2" />
+      </svg>
+    </section>
     <router-link to="/login" v-if="signinUp" class="head_login">登录|注册</router-link>
-    <div class="title_head" v-if="headTitle">{{headTitle}}</div>
+    <section class="title_head ellipsis" v-if="headTitle">
+      <span class="title_text">{{headTitle}}</span>
+    </section>
+    <slot name="msite-title" />
     <slot name="changecity" />
   </header>
 </template>
@@ -28,6 +36,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/mixin';
 #head_top {
+  z-index:9999999999999;
   position: fixed;
   left: 0;
   top: 0;
@@ -49,8 +58,14 @@ export default {
 }
 
 .title_head {
+  width: 50%;
+  text-align: center;
+  color: #fff;
   @include center;
-  @include sizecolor(0.7rem, #fff);
+  .title_text {
+    @include sizecolor(0.8rem, #fff);
+    text-align: center;
+  }
 }
 </style>
 

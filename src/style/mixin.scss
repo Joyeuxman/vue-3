@@ -37,3 +37,9 @@ $bordercolor:#e4e4e4;
   font-size:$size;
   color:$color;
 }
+
+// flex 布局和子元素 对齐方式
+@mixin fj($type:space-between){
+  display: flex;
+  justify-content: $type;
+}
