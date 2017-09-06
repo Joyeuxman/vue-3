@@ -10,13 +10,12 @@
       </div>
       <router-link class="guess_city" :to="`/city/${guessCityid}`">
         <span>{{guessCity}}</span>
-        <span>></span>
       </router-link>
     </nav>
     <div id="hot_city_container">
       <h4 class="city_title">热门城市</h4>
       <ul class="citylistul clear">
-        <router-link tag="li" v-for="item in hotcity" :to=" `/city/${item.id}`" :key="item.id">
+        <router-link tag="li" v-for="(item,index) in hotcity" :to=" `/city/${item.id}`" :key="item.id">
           {{item.name}}
         </router-link>
       </ul>
@@ -46,10 +45,10 @@ export default {
   name: 'home',
   data() {
     return {
-      guessCity: '',
-      guessCityid: '',
-      hotcity: [],
-      groupcity: {},
+      guessCity: '',//当前定位城市name
+      guessCityid: '',//当前定位城市id
+      hotcity: [],//热门城市
+      groupcity: {},//城市列表
     }
   },
   created() {
@@ -66,6 +65,7 @@ export default {
   },
   components: { headTop },
   computed: {
+    // 当sortgroupcity依赖的属性即this.groupcity发生变化时，就会触发该函数
     sortgroupcity() {
       // 按照A-Z的顺序将请求回来的城市数据放到sortgroupcity计算属性中
       // String.fromCharCode(num),将Unicode码转化为对应的字符串。

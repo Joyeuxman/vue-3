@@ -5,6 +5,8 @@ export default (type = 'GET', url = '', data = {}) => {
 		type = type.toUpperCase();
 		url = baseUrl + url
 		let requestObj = {
+			// 底层fetch默认不发送cookie,
+			// 加上credential:'include'之后，可实现发送cookie
 			credentials: 'include',
 		  	method: type,
 		  	headers: {
@@ -15,16 +17,18 @@ export default (type = 'GET', url = '', data = {}) => {
 		}
 
 		if (type == 'GET') {
-			let dataStr = ''; //数据拼接字符串
+			let dataStr = ''; 
+			//将请求参数对象处理成key1=value1&key2=value2&的形式
 			Object.keys(data).forEach(key => {
 				dataStr += key + '=' + data[key] + '&';
 			})
-
+			// 将请求参数拼接到?后面
 			if (dataStr !== '') {
 				dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
 				url = url + '?' + dataStr;
 			}
 		}else if (type == 'POST') {
+			// 由于POST请求参数在body里边，为请求对象添加body对象属性
 			Object.defineProperty(requestObj, 'body', {
 				value: JSON.stringify(data)
 			})

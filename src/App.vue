@@ -1,4 +1,5 @@
 <template>
+<!-- ??? 此处为什么还要再写一次id=app，以及router-view标签 -->
 	<div id="app">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0;visibility:hidden">
 			<defs>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-
+// ???此处什么都没有导出，是因为没有别的组件引用吗
 export default {
 
 }

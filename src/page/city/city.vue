@@ -36,13 +36,13 @@ export default {
   components: { headTop },
   data() {
     return {
-      inputValue: '',
-      cityid: '',
-      cityname: '',
-      placelist: [],
-      placeHistory: [],
-      historytitle: true,
-      placeNone: false,
+      inputValue: '',//搜索地点的关键字
+      cityid: '',//城市id
+      cityname: '',//城市name
+      placelist: [],//渲染页面所需的搜索历史
+      placeHistory: [],//用户搜索地点的历史记录，将存储在localStorage中
+      historytitle: true,//是否显示搜索历史四个汉字
+      placeNone: false,//是否搜索到结果
     }
   },
   created() {
@@ -73,7 +73,7 @@ export default {
       let history = Tool.getStore('placeHistory');
       let choosePlace = this.placelist[index];
       if (history) {
-        // 根据geohash这个唯一的标识符进行去重
+        // 根据geohash这个唯一的标识符对placeHistory进行去重
         let checkrepeat = false;
         this.placeHistory = JSON.parse(history);
         this.placeHistory.forEach(item => {
@@ -91,6 +91,17 @@ export default {
       this.$router.push({ path: '/msite', query: { geohash } })
     }
   },
+  watch: {
+    // 监听路由参数的变化
+    '$route'(to, from) {
+      const conStr = `城市切换城市如city/1(上海)跳转路由到city/6(南京)时，原来的组件实例会被复用(即页面不发生变化)。
+      因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。同时组件的生命周期钩子也不会再被调用。`
+      if (true) {
+        console.log(conStr);
+        console.log(to, from);
+      }
+    }
+  }
 }
 </script>
 
