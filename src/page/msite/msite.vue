@@ -49,7 +49,8 @@ import { msiteAddress, msiteFoodTypes, msiteShopList } from '@/service/getData'
 // ??? 报错 未解决
 // 通过在根目录中的index.html中全局引入swiper.min.js
 // require('../../plugins/swiper.min.js') ;
-// import '../../style/swiper.min.css'
+import '../../plugins/swiper.min.js'
+import '../../style/swiper.min.css'
 
 export default {
   name: 'msite',
