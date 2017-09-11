@@ -1,7 +1,7 @@
 <template>
   <div>
     <head-top signin-up="msite">
-      <router-link class="link_search" to="/search" slot="search">
+      <router-link class="link_search" :to="`/search/${geohash}`" slot="search">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <circle cx="9" cy="9" r="8" stroke="rgb(255,255,255)" stroke-width="2" fill="none" />
           <line x1="15" y1="15" x2="20" y2="20" style="stroke:rgb(255,255,255);stroke-width:2" />
@@ -15,7 +15,7 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide food_types_container" v-for="(item,index) in foodTypes" :key="index">
-            <router-link class="link_to_food" :to="{path:'/food',query:{geohash}}" v-for="foodItem in item" :key="foodItem.id">
+            <router-link class="link_to_food" :to="{path:'/food',query:{geohash,title:foodItem.title,restaurant_category_id:getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id">
               <!-- ???figure 有着很大的外边距，记得要将其外边距置0 -->
               <figure>
                 <img :src="imgBaseUrl + foodItem.image_url" alt="图片">
@@ -98,6 +98,15 @@ export default {
     ...mapMutations([
       'RECORD_ADDRESS'
     ]),
+    // 解码url地址，求去restaurant_category_id的值
+    getCategoryId(url){
+      const urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
+      if(/restaurant_category_id/gi.test(urlData)){
+        return JSON.parse(urlData).restaurant_category_id.id;
+      }else{
+        return ''
+      }
+    }
   },
 }
 </script>
@@ -121,13 +130,13 @@ export default {
     // 唯一特别之处是 父元素上下左右居中
     // 由于父元素也是块元素，貌似可以继承父元素的上下左右居中
     display: block;
-    @include sizecolor(0.8rem, #fff);
+    @include sc(0.8rem, #fff);
   }
 }
 
 .msite_nav {
   padding-top: 2.1rem;
-  border-bottom: 0.025rem solid $bordercolor;
+  border-bottom: 0.025rem solid $bc;
   background-color: #fff;
   .swiper-container {
     padding-bottom: 0.6rem;
@@ -152,7 +161,7 @@ export default {
       }
       figcaption {
         text-align: center;
-        @include sizecolor(0.55rem, #666);
+        @include sc(0.55rem, #666);
       }
     }
   }
@@ -160,7 +169,7 @@ export default {
 
 .shop_list_container {
   margin-top: .4rem;
-  border-top: 0.025rem solid $bordercolor;
+  border-top: 0.025rem solid $bc;
   background-color: #fff;
   .shop_header {
     .shop_icon {

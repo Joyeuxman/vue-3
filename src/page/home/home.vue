@@ -96,7 +96,7 @@ export default {
 .head_logo {
   left: 0.4rem;
   font-weight: 400;
-  @include sizecolor(0.7rem, #fff);
+  @include sc(0.7rem, #fff);
   @include wh(2.3rem, 0.7rem);
   @include center-top;
 }
@@ -104,7 +104,7 @@ export default {
 .city_nav {
   margin-top: 2.35rem;
   margin-bottom: 0.4rem;
-  border-top: 1px solid $bordercolor;
+  border-top: 1px solid $bc;
   background-color: #fff;
   .city_tip {
     display: flex;
@@ -112,11 +112,11 @@ export default {
     line-height: 1.45rem;
     padding: 0 0.45rem;
     span:nth-of-type(1) {
-      @include sizecolor(0.55rem, #666);
+      @include sc(0.55rem, #666);
     }
     span:nth-of-type(2) {
       font-weight: 900;
-      @include sizecolor(0.475rem, #9f9f9f);
+      @include sc(0.475rem, #9f9f9f);
     }
   }
   .guess_city {
@@ -124,8 +124,8 @@ export default {
     justify-content: space-between;
     height: 1.8rem;
     padding: 0 0.45rem;
-    border-top: 1px solid $bordercolor;
-    border-bottom: 2px solid $bordercolor;
+    border-top: 1px solid $bc;
+    border-bottom: 2px solid $bc;
     @include font(0.75rem, 1.8rem);
     span:nth-of-type(1) {
       color: $blue;
@@ -144,8 +144,8 @@ export default {
 .citylistul {
   li {
     float: left;
-    border-bottom: 0.025rem solid $bordercolor;
-    border-right: 0.025rem solid $bordercolor;
+    border-bottom: 0.025rem solid $bc;
+    border-right: 0.025rem solid $bc;
     text-align: center;
     color: $blue;
     @include wh(25%, 1.75rem);
@@ -157,20 +157,20 @@ export default {
 }
 
 .city_title {
-  border-top: 2px solid $bordercolor;
-  border-bottom: 1px solid $bordercolor;
+  border-top: 2px solid $bc;
+  border-bottom: 1px solid $bc;
   text-indent: 0.45rem;
   font-weight: 400;
   color: #666;
   @include font(0.55rem, 1.45rem, 'Helvetica Neue');
   span {
-    @include sizecolor(0.475rem, #999);
+    @include sc(0.475rem, #999);
   }
 }
 
 .letter_classify_li {
   margin-bottom: 0.4rem;
-  border-bottom: 1px solid $bordercolor;
+  border-bottom: 1px solid $bc;
   background-color: #fff;
   .groupcity_name_container {
     li {

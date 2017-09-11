@@ -30,11 +30,13 @@ module.exports = {
     // 代理路由表
     // localhost:3033/v1  --> https://mainsite-restapi.ele.me/v1
     proxyTable: {
-      '/v1':{
+      '/api':{
         target:'https://mainsite-restapi.ele.me',
         changeOrigin: true,
         pathRewrite: {
-          '^/v1': '/v1'
+          '^/api/v1': '/v1',
+          '^/api/v4': '/v4',
+          '^/api/shopping': '/shopping',
         }
       }
     },

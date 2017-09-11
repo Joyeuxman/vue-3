@@ -1,5 +1,5 @@
 $blue:#3190e8;
-$bordercolor:#e4e4e4;
+$bc:#e4e4e4;
 
 // 背景图片设置
 @mixin backimg($url){
@@ -33,7 +33,7 @@ $bordercolor:#e4e4e4;
 }
 
 // 字体大小、颜色
-@mixin sizecolor($size,$color){
+@mixin sc($size,$color){
   font-size:$size;
   color:$color;
 }

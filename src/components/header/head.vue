@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  name:'headTop',
   data() {
     return {
 
@@ -52,7 +53,7 @@ export default {
 
 .head_login {
   right: 0.55rem;
-  @include sizecolor(0.6rem, #fff);
+  @include sc(0.6rem, #fff);
   @include center-top;
 }
 
@@ -62,7 +63,7 @@ export default {
   color: #fff;
   @include center;
   .title_text {
-    @include sizecolor(0.8rem, #fff);
+    @include sc(0.8rem, #fff);
     text-align: center;
   }
 }

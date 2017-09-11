@@ -17,7 +17,7 @@ export default [{
     // 可以匹配 /city/ 和 /city/1
     { path: '/city/:cityid?', component: city },          //当前选择城市页面
     { path: '/msite', component: msite },        //所有商铺列表页面
-    { path: '/search', component: search },        //搜索页面
+    { path: '/search/:geohash?', component: search },        //搜索页面
     { path: '/food', component: food },        //特色商铺列表页面
     { path: '/login', component: login },        //登录注册页面
     // {path: '/msite',component: msite},        //所有商铺列表页面

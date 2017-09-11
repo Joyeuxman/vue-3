@@ -114,13 +114,13 @@ export default {
 .change_city {
   right: 0.4rem;
   @include center-top;
-  @include sizecolor(0.6rem, #fff);
+  @include sc(0.6rem, #fff);
 }
 
 .city_form {
   padding-top: 0.4rem;
-  border-top: 1px solid $bordercolor;
-  border-bottom: 1px solid $bordercolor;
+  border-top: 1px solid $bc;
+  border-bottom: 1px solid $bc;
   background-color: #fff;
   div {
     width: 90%;
@@ -133,39 +133,39 @@ export default {
     }
     .city_input {
       padding: 0 0.3rem;
-      border: 1px solid $bordercolor;
-      @include sizecolor(0.65rem, #333);
+      border: 1px solid $bc;
+      @include sc(0.65rem, #333);
     }
     .city_submit {
       background-color: $blue;
-      @include sizecolor(0.65rem, #fff);
+      @include sc(0.65rem, #fff);
     }
   }
 }
 
 .pois_search_history {
   padding-left: 0.5rem;
-  border-top: 1px solid $bordercolor;
-  border-bottom: 1px solid $bordercolor;
+  border-top: 1px solid $bc;
+  border-bottom: 1px solid $bc;
   @include font(0.475rem, 0.8rem);
 }
 
 .getpois_ul {
-  border-top: 1px solid $bordercolor;
+  border-top: 1px solid $bc;
   background-color: #fff;
   li {
     margin: 0 auto;
     padding-top: 0.65rem;
-    border-bottom: 1px solid $bordercolor;
+    border-bottom: 1px solid $bc;
     .pois_name {
       margin: 0 auto 0.35rem;
       width: 90%;
-      @include sizecolor(0.65rem, #333);
+      @include sc(0.65rem, #333);
     }
     .pois_adress {
       width: 90%;
       margin: 0 auto 0.55rem;
-      @include sizecolor(0.45rem, #999);
+      @include sc(0.45rem, #999);
     }
   }
 }
