@@ -222,23 +222,23 @@ export default {
       const res = await msiteAddress(this.geohash);
       // 记录当前经度纬度存入vuex
       this.RECORD_ADDRESS(res);
-      // 获取category分类左侧数据
-      this.category = await foodCategory(this.latitude, this.longitude);
-      // 初始化时定位当前category分类左侧默认选择项，在右侧展示出其sub_categories列表
-      this.category.forEach(item => {
-        if (this.restaurant_category_id == item.id) {
-          this.categoryDetail = item.sub_categories;
-        }
-      })
-      // 获取筛选列表的配送方式
-      this.Delivery = await foodDelivery(this.latitude, this.longitude);
-      // 获取筛选列表的商铺活动
-      this.Activity = await foodActivity(this.latitude, this.longitude);
-      // 记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
-      this.Activity.forEach((item, index) => {
-        this.support_ids[index] = { status: false, id: item.id };
-      })
     }
+    // 获取category分类左侧数据
+    this.category = await foodCategory(this.latitude, this.longitude);
+    // 初始化时定位当前category分类左侧默认选择项，在右侧展示出其sub_categories列表
+    this.category.forEach(item => {
+      if (this.restaurant_category_id == item.id) {
+        this.categoryDetail = item.sub_categories;
+      }
+    })
+    // 获取筛选列表的配送方式
+    this.Delivery = await foodDelivery(this.latitude, this.longitude);
+    // 获取筛选列表的商铺活动
+    this.Activity = await foodActivity(this.latitude, this.longitude);
+    // 记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
+    this.Activity.forEach((item, index) => {
+      this.support_ids[index] = { status: false, id: item.id };
+    })
   },
   methods: {
     ...mapMutations([
@@ -299,6 +299,7 @@ export default {
     sortList(event) {
       this.sortByType = event.target.getAttribute('data');
       // ???此处为什么要清空sortBy
+      // 将遮罩层去掉
       this.sortBy = '';
     },
     // 筛选选项中的配送方式
@@ -395,7 +396,8 @@ export default {
         fill: $blue;
       }
     }
-  } // enter --> enter-active --> enter-to
+  } // enter(进入过渡的开始状态) --> enter-to(进入过渡的结束状态) ; enter + enter-to === enter-active(进入过渡的整个状态) 
+  // 整个过渡过程中
   // transition: all .3s;所有的过度效果持续0.3秒
   // transform:translateY(0);Y轴上平移到0位置
   .showlist-enter-active,
@@ -405,6 +407,7 @@ export default {
   }
   .showlist-enter,
   .showlist-leave-active {
+    // opacity 默认值为1
     opacity: 0;
     transform: translateY(-100%);
   }

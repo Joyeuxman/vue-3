@@ -24,7 +24,6 @@
             </router-link>
           </div>
         </div>
-        <!-- ???分页器不显示  未解决 -->
         <div class="swiper-pagination"></div>
       </div>
     </nav>
@@ -35,7 +34,7 @@
         </svg>
         <span class="shop_header_title">附近商家</span>
       </header>
-      <shop-list v-if="hasGetData" />
+      <shop-list v-if="hasGetData" :geohash="geohash" />
     </div>
   </div>
 </template>
@@ -46,9 +45,13 @@ import { imgBaseUrl } from '@/config/env'
 import headTop from '@/components/header/head'
 import shopList from '@/components/common/shopList'
 import { msiteAddress, msiteFoodTypes, msiteShopList } from '@/service/getData'
-// ??? 报错 未解决
+// ??? 报错 
 // 通过在根目录中的index.html中全局引入swiper.min.js
 // require('../../plugins/swiper.min.js') ;
+// 以上做法会导致swiper分页器不显示 
+// 已解决 
+// 将.babelrc文件的"modules": false配置去掉，在plugins选项中添加transform-es2015-modules-commonjs
+// 执行 npm install transform-es2015-modules-commonjs --save
 import '../../plugins/swiper.min.js'
 import '../../style/swiper.min.css'
 
@@ -99,11 +102,11 @@ export default {
       'RECORD_ADDRESS'
     ]),
     // 解码url地址，求去restaurant_category_id的值
-    getCategoryId(url){
-      const urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
-      if(/restaurant_category_id/gi.test(urlData)){
+    getCategoryId(url) {
+      const urlData = decodeURIComponent(url.split('=')[1].replace('&target_name', ''));
+      if (/restaurant_category_id/gi.test(urlData)) {
         return JSON.parse(urlData).restaurant_category_id.id;
-      }else{
+      } else {
         return ''
       }
     }

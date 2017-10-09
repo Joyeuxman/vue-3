@@ -51,7 +51,6 @@ const loadMore = (element, callback) => {
   // 运动开始时获取元素 height offsetTop padding margin
   // passive 解决移动端滚动、触摸产生的卡顿
   element.addEventListener('touchstart', () => {
-    console.log('触发touchstart事件');
     height = element.offsetHeight;
     setTop = element.offsetTop;
     paddingBottom = getStyle(element, 'paddingBottom');
@@ -60,7 +59,6 @@ const loadMore = (element, callback) => {
 
   // 运动过程中保持坚挺 scrollTop 的值判断是否到达底部
   element.addEventListener('touchmove', () => {
-    console.log('触发touchmove事件');
     loadMore();
   }, { passive: true })
 
@@ -108,7 +106,10 @@ const showBack = callback => {
     moveEnd();
   }, { passive: true })
   const moveEnd = () => {
+    // CSS3动画不能支持平滑滚动的动画效果，需要使用requestAnimationFrame来制作平滑的动画效果
     requestFram = requestAnimationFrame(() => {
+      // 当猛的滑动屏幕时，touchend事件结束，但手机屏幕还在滑动，
+      // 因此需要根据新旧的页面滚动的高度来判断，是否重新触发touchend事件
       if (document.body.scrollTop != oldScrollTop) {
         oldScrollTop = document.body.scrollTop;
         moveEnd();
@@ -128,49 +129,6 @@ const showBack = callback => {
   }
 }
 
-// 
-// const animate = (element, target, duration = 400, mode = 'ease-out', callback) => {
-//   clearInterval(element.timer);
-
-//   // 判断不同参数的情况
-//   if (duration instanceof Function) {
-//     callback = duration;
-//     duration = 400;
-//   }
-//   else if (duration instanceof String) {
-//     mode = duration;
-//     duration = 400;
-//   }
-//   else if (mode instanceof Function) {
-//     callback = mode;
-//     mode = 'ease-out';
-//   }
-
-//   // 获取DOM样式
-//   const attrStyle = attr => {
-//     if (attr === 'opacity') {
-//       return Math.round(getStyle(element, attr, 'float') * 100);
-//     }else{
-//       return getStyle(element,attr);
-//     }
-//   }
-
-//   // 根据字体大小，需要从此将rem改成px进行计算
-//   const  rootSize = parseFloat(document.documentElement.style.fontSize);
-
-//   const unit = {};
-//   const initState = {};
-
-//   // 获取目标属性单位和初始样式值
-//   Object.keys(target).forEach(attr =>{
-//     if(/[^\d^\.]+/gi.test(target[attr])){
-//       unit[attr] = target[attr].match(/[^\d^\.]+/gi)[0] || 'px';
-//     }else{
-//       unit[attr] = 'px';
-//     }
-//     initState[state] = attrStyle(attr);
-//   })
-// }
 
 /**
  * 运动效果

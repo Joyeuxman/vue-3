@@ -62,7 +62,7 @@ vue2-webpack-vuex-vueRouter-flex-svg
 * `element.currentStyle`<br>
 `currentStyle`是IE浏览器自娱自乐的一个属性，其与`element.style`可以说是近亲，至少在使用形式上类似，`element.currentStyle`，差别在于`element.currentStyle`返回的是元素当前应用的最终CSS属性值（包括外链CSS文件，页面中嵌入的<style>属性等）。
 * `element.scrollTop` 属性可以设置或者获取一个元素被卷起的像素距离。一个元素的 scrollTop 是可以去计算出这个元素最高高度距离它容器顶部的可见高度。当一个元素的容器没有产生垂直方向的滚动条,那它的 scrollTop 的值默认为0.
-* 冒泡false与捕获true
+* 冒泡(默认)false与捕获true
 1.一种事件触发方式 <br>
 冒泡：子元素先触发冒泡，父元素次之。捕获：父元素先触发捕获，子元素次之
 2.两种事件触发方式混合<br>

@@ -6,6 +6,9 @@ const msite = r => require.ensure([], () => r(require('@P/msite/msite')), 'msite
 const search = r => require.ensure([], () => r(require('@P/search/search')), 'search');
 const login = r => require.ensure([], () => r(require('@P/login/login')), 'login');
 const food = r => require.ensure([], () => r(require('@P/food/food')), 'food');
+const shop = r => require.ensure([], () => r(require('@P/shop/shop')), 'shop');
+const rating = r => require.ensure([], () => r(require('../page/shop/children/rating')), 'rating')
+// import shop from '@P/shop/shop';
 
 
 export default [{
@@ -20,6 +23,12 @@ export default [{
     { path: '/search/:geohash?', component: search },        //搜索页面
     { path: '/food', component: food },        //特色商铺列表页面
     { path: '/login', component: login },        //登录注册页面
+    { //商铺详情页面
+      path: '/shop', component: shop,
+      children: [
+        {path:'rating',component:rating}
+      ]
+    },       
     // {path: '/msite',component: msite},        //所有商铺列表页面
     // {path: '/msite',component: msite},        //所有商铺列表页面
   ]

@@ -35,6 +35,8 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/api/v1': '/v1',
+          '^/api/v2': '/v2',
+          '^/api/v3': '/v3',
           '^/api/v4': '/v4',
           '^/api/shopping': '/shopping',
         }

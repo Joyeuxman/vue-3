@@ -21,6 +21,13 @@ $bc:#e4e4e4;
   transform:translateY(-50%);
 }
 
+// 定位左右居中
+@mixin center-left{
+  position: absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+
 // 字体大小、行高、字体
 @mixin font($size,$line-height,$family:'Microsoft YaHei'){
   font:#{$size}/#{$line-height} $family;

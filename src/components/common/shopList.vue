@@ -1,9 +1,9 @@
 <template>
   <div class="shoplist_container">
     <ul v-load-more="loaderMore" v-if="shopListArr.length">
-      <router-link class="shop_li" tag="li" :to="{path:'food',query:{}}" v-for="item in shopListArr" :key="item.id">
+      <router-link class="shop_li" tag="li" :to="{path:'shop',query:{geohash,id:item.id}}" v-for="item in shopListArr" :key="item.id">
         <section>
-          <img class="shop_img" :src="`${imgBaseUrl}${subImgUrl(item.image_path)}`" alt="商品图片">
+          <img class="shop_img" :src="getImgPath(item.image_path)" alt="商品图片">
         </section>
         <hgroup class="shop_right">
           <header class="shop_detail_header">
@@ -13,24 +13,10 @@
               <li class="supports" v-for="item in item.supports" :key="item.id">{{item.icon_name}}</li>
             </ul>
           </header>
-          <!-- ??? -->
           <h5 class="rating_order_num">
             <section class="rating_order_num_left">
               <section class="rating_section">
-                <div class="rating_container">
-                  <span class="star_container">
-                    <svg class="grey_fill" v-for="num in 5" :key="num">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#star"></use>
-                    </svg>
-                  </span>
-                  <div :style="'width:' + item.rating*2/5 + 'rem'" class="star_overflow">
-                    <span class="star_container">
-                      <svg class="orange_fill" v-for="num in 5" :key="num">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#star"></use>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
+                <rating-star :rating='item.rating' />
                 <span class="rating_num">{{item.rating}}</span>
               </section>
               <section class="order_section">
@@ -67,15 +53,19 @@
     </aside>
     <footer class="load_more">正在加载更多商家...</footer>
     <div ref="abc" style="background-color:red;"></div>
+    <transition name="loading">
+      <loading v-show="showLoading" />
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { imgBaseUrl } from '@/config/env'
 import { msiteShopList } from '@/service/getData'
-import { loadMore } from '@/components/common/mixin'
+import { loadMore, getImgPath } from '@/components/common/mixin'
 import { showBack, animate } from '@/config/mUtils'
+import loading from '@/components/common/loading'
+import ratingStar from '@/components/common/ratingStar'
 
 export default {
   name: 'shopList',
@@ -83,41 +73,31 @@ export default {
     return {
       offset: 0,//批次加载店铺列表，每次加载20个 limit=20
       shopListArr: [],//店铺列表数据
-      imgBaseUrl,//图片域名地址
       preventRepeatRequest: false,//到达底部加载数据，防止重复加载
       showBackStatus: false,//显示返回顶部按钮
+      showLoading: true,//显示加载动画
     }
   },
   // async await 异步执行
   // 等到msiteShop这个异步请求得到结果后，才执行生命周期中在mounted之后的操作
   async mounted() {
     this.shopListArr = await msiteShopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId);
+    this.showLoading = false;
     // 开始监听scrollTop的值，达到一定程度后开始显示返回顶部按钮
     showBack(status => {
       this.showBackStatus = status;
     })
   },
-  props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType', 'deliveryMode', 'supportIds', 'confirmSelect'],
-  mixins: [loadMore],
+  components: { loading, ratingStar },
+  props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType', 'deliveryMode', 'supportIds', 'confirmSelect','geohash'],
+  // 将getImgPath提取为公共方法，用mixins来接收
+  mixins: [loadMore, getImgPath],
   computed: {
     ...mapState([
       'latitude', 'longitude'
     ])
   },
   methods: {
-    // 传递过来的图片地址需要经过处理后才可以正常使用
-    subImgUrl(path) {
-      let suffix;//图片后缀 --- suffix 后缀
-      if (path.indexOf('jpeg') !== -1) {
-        suffix = '.jpeg';
-      } else {
-        suffix = '.png';
-      }
-      // 拼接成饿了吗后台存放图片的地址
-      const url = `/${path.substr(0, 1)}/${path.substr(1, 2)}/${path.substr(3)}${suffix}`;
-      return url;
-    },
-
     // 到达底部加载更多数据
     async loaderMore() {
       // 防止重复请求
@@ -225,28 +205,6 @@ export default {
       @include fj(flex-start);
       .rating_section {
         display: flex;
-        .rating_container {
-          position: relative;
-          width: 2rem;
-          .star_overflow {
-            position: absolute;
-            height: 100%;
-            overflow: hidden;
-          }
-          .star_container {
-            display: flex;
-            position: absolute;
-            top: -0.02rem;
-            width: 2rem;
-            height: 0.4rem;
-            .grey_fill {
-              fill: #d1d1d1;
-            }
-            .orange_fill {
-              fill: #ff9a0d;
-            }
-          }
-        }
         .rating_num {
           @include sc(0.4rem, #ff6000);
           margin: 0 0.2rem;

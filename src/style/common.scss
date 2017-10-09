@@ -74,3 +74,9 @@ html,body{
 .paddingTop{
   padding-top: 1.95rem;
 }
+
+::-webkit-scrollbar{
+  width:0px;
+  height: 0px;
+  background-color: #f5f5f5;
+}
