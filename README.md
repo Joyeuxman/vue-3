@@ -69,6 +69,21 @@ vue2-webpack-vuex-vueRouter-flex-svg
 点击子元素：父元素捕获-->子元素冒泡-->子元素捕获-->父元素冒泡<br>
 点击父元素：父元素冒泡-->父元素捕获
 * [addEventLister passive:true](http://www.cnblogs.com/ziyunfei/p/5545439.html)可以移动端解决滚动和触摸事件的卡顿
+* [DOMContentLoaded与load事件的区别](http://www.cnblogs.com/caizhenbo/p/6679478.html)
+
+
+### 插件
+* fastclick.js 处理移动端click事件300毫秒延迟
+1.为什么存在延迟<br>
+从点击屏幕上的元素到触发元素的click事件，移动浏览器会有大约300毫秒的等待时间。为什么这么设计？因为它想想看看你是不是要进行双击（double tap）操作。
+2.不应用fastclick的场景
+a.桌面浏览器
+b.如果viewport meta标签中设置了 width=device-width，Android上的Chrome32+会禁用300ms延迟
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+c.viewport meta 标签如果设置了user-scalable=no,Android上的Chrome(所有版本)都会禁用300ms延迟。
+d.IE10中，可以使用css属性 -ms-touch-action:none  禁止元素双击缩放
+* showdown.js 一个javascript环境下markdown语法解释工具
+
 
 ### 不足
 * 需要系统学习一下svg
