@@ -10,6 +10,9 @@ const state = {
   latitude: '',//当前位置纬度
   longitude: '',//当前位置经度
   cartList:{},//加入购物车的商品列表
+  userInfo:null,//用户信息
+  removeAddress:[],//移除地址
+  login:true,//用户是否登录
 }
 
 export default new Vuex.Store({

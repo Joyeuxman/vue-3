@@ -7,7 +7,7 @@ const search = r => require.ensure([], () => r(require('@P/search/search')), 'se
 const login = r => require.ensure([], () => r(require('@P/login/login')), 'login');
 const food = r => require.ensure([], () => r(require('@P/food/food')), 'food');
 const shop = r => require.ensure([], () => r(require('@P/shop/shop')), 'shop');
-const rating = r => require.ensure([], () => r(require('../page/shop/children/rating')), 'rating')
+const rating = r => require.ensure([], () => r(require('@P/shop/children/rating')), 'rating');
 // import shop from '@P/shop/shop';
 
 
@@ -22,14 +22,33 @@ export default [{
     { path: '/msite', component: msite },        //所有商铺列表页面
     { path: '/search/:geohash?', component: search },        //搜索页面
     { path: '/food', component: food },        //特色商铺列表页面
-    { path: '/login', component: login },        //登录注册页面
     { //商铺详情页面
       path: '/shop', component: shop,
       children: [
-        {path:'rating',component:rating}
+        { path: 'rating', component: rating },    //评论页
       ]
-    },       
-    // {path: '/msite',component: msite},        //所有商铺列表页面
-    // {path: '/msite',component: msite},        //所有商铺列表页面
+    },
+    { path: '/login', component: login },        //登录注册页
+    // {
+    //   path: '/profile', component: profile,       //个人信息页
+    //   children: [
+    //     {
+    //       path: 'info', component: info,      //个人信息详情页
+    //       children: [
+    //         {
+    //           path: 'address', component: address,    //编辑地址页
+    //           children: [
+    //             {
+    //               path: 'add', component: add,
+    //               children: [{ path: 'addDetail', component: addDetail }], //添加地址页
+    //             }
+    //           ]
+    //         }
+    //       ]
+    //     },
+    //     { path: 'setusername', component: setusername },
+    //     { path: 'service', component: service },    //服务中心
+    //   ]
+    // },
   ]
 }]
