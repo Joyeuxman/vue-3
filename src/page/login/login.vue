@@ -47,12 +47,13 @@
     </p>
     <div class="login_container" @click="mobileLogin">登录</div>
     <router-link to="/forget" class="to_forget" v-if="!loginWay">忘记密码？</router-link>
-
+    <alert-tip v-if="showAlert" @closeTip="closeTip" :showHide="showAlert" :alertText="alertText"/>
   </div>
 </template>
 
 <script>
 import headTop from '@/components/header/head';
+import alertTip from '@/components/common/alertTip';
 import { mapState, mapMutations } from 'vuex';
 import { checkExsis, mobileCode, sendLogin, accountLogin, getcaptchas } from '@/service/getData';
 
@@ -75,7 +76,7 @@ export default {
       captchaCodeImg: null,//验证码图片地址
     }
   },
-  components: { headTop },
+  components: { headTop,alertTip },
   methods: {
     ...mapMutations(['RECORD_USERINFO']),
     changeLoginWay() {
@@ -163,6 +164,9 @@ export default {
         this.RECORD_USERINFO(this.userInfo);
         this.$router.go(-1);
       }
+    },
+    closeTip(){
+      this.showAlert = false;
     }
   }
 }

@@ -16,7 +16,7 @@
     </section>
     <slot name="msite-title" />
     <!-- 特色商铺名称 -->
-    <router-link :to=" userInfo ? '/login':'/login'" v-if="signinUp" class="head_login">
+    <router-link :to=" userInfo ? '/profile':'/login'" v-if="signinUp" class="head_login">
       <svg class="user_avatar" v-if="userInfo">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user" />
       </svg>
