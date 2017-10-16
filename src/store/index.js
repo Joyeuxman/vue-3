@@ -13,6 +13,7 @@ const state = {
   userInfo:null,//用户信息
   removeAddress:[],//移除地址
   login:true,//用户是否登录
+  imgPath:null,//头像地址
 }
 
 export default new Vuex.Store({

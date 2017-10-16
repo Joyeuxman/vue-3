@@ -74,6 +74,7 @@ export default {
       codeNumber: null,//验证码
       showPassword: false,//是否显示密码
       captchaCodeImg: null,//验证码图片地址
+      userInfo:null,//获取到的用户信息
     }
   },
   components: { headTop,alertTip },

@@ -7,6 +7,8 @@ const search = r => require.ensure([], () => r(require('@P/search/search')), 'se
 const login = r => require.ensure([], () => r(require('@P/login/login')), 'login');
 const food = r => require.ensure([], () => r(require('@P/food/food')), 'food');
 const shop = r => require.ensure([], () => r(require('@P/shop/shop')), 'shop');
+const profile = r => require.ensure([], () => r(require('@P/profile/profile')), 'profile');
+const info = r => require.ensure([], () => r(require('@P/profile/children/info')), 'info');
 const rating = r => require.ensure([], () => r(require('@P/shop/children/rating')), 'rating');
 // import shop from '@P/shop/shop';
 
@@ -29,26 +31,26 @@ export default [{
       ]
     },
     { path: '/login', component: login },        //登录注册页
-    // {
-    //   path: '/profile', component: profile,       //个人信息页
-    //   children: [
-    //     {
-    //       path: 'info', component: info,      //个人信息详情页
-    //       children: [
-    //         {
-    //           path: 'address', component: address,    //编辑地址页
-    //           children: [
-    //             {
-    //               path: 'add', component: add,
-    //               children: [{ path: 'addDetail', component: addDetail }], //添加地址页
-    //             }
-    //           ]
-    //         }
-    //       ]
-    //     },
-    //     { path: 'setusername', component: setusername },
-    //     { path: 'service', component: service },    //服务中心
-    //   ]
-    // },
+    {
+      path: '/profile', component: profile,       //个人信息页
+      children: [
+        {
+          path: 'info', component: info,      //个人信息详情页
+          // children: [
+          //   {
+          //     path: 'address', component: address,    //编辑地址页
+          //     children: [
+          //       {
+          //         path: 'add', component: add,
+          //         children: [{ path: 'addDetail', component: addDetail }], //添加地址页
+          //       }
+          //     ]
+          //   }
+          // ]
+        },
+        // { path: 'setusername', component: setusername },
+        // { path: 'service', component: service },    //服务中心
+      ]
+    },
   ]
 }]

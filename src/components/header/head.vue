@@ -45,6 +45,7 @@ export default {
   created() {
     // 获取用户信息
     this.getUserInfo();
+    console.log('用户信息===',this.userInfo);
   },
   props: ['signinUp', 'headTitle', 'goBack'],
   computed:{
@@ -59,7 +60,6 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/mixin';
 #head_top {
-  z-index: 9999999999999;
   position: fixed;
   left: 0;
   top: 0;

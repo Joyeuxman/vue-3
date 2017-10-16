@@ -123,8 +123,27 @@ export default {
       state.userInfo = null;
     }
   }
+  // 保存用户信息
+  ,[RECORD_USERINFO](state,info){
+    state.userInfo = info;
+    state.login = true;
+    let validity = 30;
+    let now = new Date();
+    now.setTime(now.getTime() + validity*24*60*60*1000);
+    document.cookie = `USERID=${info.user_id};expires=${now.toGMTString()}`;
+    document.cookie = `SID=huRyTRd9QLij7NkbpHJoj3PQrx1eRiO6bAiw;expires=${now.toGMTString()}`;
+  }
   // 删除地址列表
   ,[SAVE_ADDRESS](state,newAdress){
     state.removeAddress = newAdress;
+  }
+  ,//保存图片
+  [SAVE_AVANDER](state,imgPath){
+    state.imgPath = imgPath;
+  }
+  ,//退出登录
+  [OUT_LOGIN](state){
+    state.userInfo = null;
+    state.login = false;
   }
 }

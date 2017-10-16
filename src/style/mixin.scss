@@ -5,7 +5,12 @@ $bc:#e4e4e4;
 @mixin backimg($url){
   background:url($url) center center / 100% 100% no-repeat;
 }
-
+// 定位全屏
+@mixin allcover{
+  position: absolute;
+  top:0;
+  right:0;
+}
 // 定位上下左右居中
 @mixin center{
   position: absolute;
