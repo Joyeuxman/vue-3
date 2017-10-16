@@ -1,6 +1,6 @@
 <template>
   <div class="rating_page">
-    <head-top head-title="评论" go-back="true" />
+    <head-top head-title="商品详情" go-back="true" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import headTop from '@/components/header/head';
 
 export default {
-  name: 'rating',
+  name: 'shopDetails',
   components: { headTop },
 }
 </script>
@@ -27,5 +27,3 @@ export default {
   background-color: #fff;
 }
 </style>
-
-

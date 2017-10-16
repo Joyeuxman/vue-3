@@ -1,6 +1,6 @@
 <template>
   <div class="rating_page">
-    <head-top head-title="商品详情" go-back="true" />
+    <head-top head-title="商铺安全认证页" go-back="true" />
   </div>
 </template>
 
@@ -9,14 +9,14 @@
 import headTop from '@/components/header/head';
 
 export default {
-  name: 'shopDetails',
+  name: 'shopSafe',
   components: { headTop },
 }
 </script>
 
 
 <style lang="scss" scoped>
-@import '@/style/mixin';
+@import '../../../../style/mixin';
 .rating_page {
   z-index: inherit 18;
   position: absolute;
