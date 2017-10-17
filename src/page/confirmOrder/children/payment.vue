@@ -24,7 +24,7 @@ export default {
 @import '../../../style/mixin';
 
 .payment_page{
-  z-index:204;
+  z-index:202;
   position: fixed;
   top:0;
   right: 0;
