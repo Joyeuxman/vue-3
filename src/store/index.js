@@ -14,6 +14,9 @@ const state = {
   removeAddress:[],//移除地址
   login:true,//用户是否登录
   imgPath:null,//头像地址
+  question:null,//问题详情
+  cartPrice:null,//会员卡价格
+  orderMessage:null,//订单返回的信息
 }
 
 export default new Vuex.Store({

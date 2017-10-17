@@ -146,4 +146,17 @@ export default {
     state.userInfo = null;
     state.login = false;
   }
+  ,//保存所选问题标题和详情
+  [SAVE_QUESTION](state,question){
+    state.question = {...question};
+  }
+  //下单成功，保存订单返回信息
+  ,[ORDER_SUCCESS](state,order){
+    state.cartPrice = null;
+    state.orderMessage = order;
+  }
+  // 会员卡价格记录
+  ,[BUY_CART](state,price){
+    state.cartPrice = price;
+  }
 }

@@ -47,9 +47,14 @@ vue2-webpack-vuex-vueRouter-flex-svg
 `v-show`的切换消耗比较低，但是不会重新渲染子组件，所以最好用于静态的内容或者不需要重新构建结构的组件。而 v-if 比较适合不太频繁的切换状态的组件。所以项目设计的时候，不要对复杂的业务设计模块太频繁的视图切换。尽量将静态内容和动态内容分离到不同的模块中。<br>
 一般来说，v-if 有更高的切换消耗而 v-show 有更高的初始渲染消耗。因此，如果需要频繁切换 v-show 较好，如果在运行时条件不大可能改变 v-if 较好
 
+* enter(进入过渡的开始状态) --> enter-to(进入过渡的结束状态) ; enter + enter-to === enter-active(进入过渡的整个状态)
+
 ### CSS
 * font-zize:0(给inline、inline-block元素的父元素设置) 解决inline、inline-block元素之间的间距<br>
 我们为了页面代码的整洁可读性，往往会设置一些适当的缩进、换行，但当元素的display为inline或者inline-block的时候，这些缩进、换行就会产生空白
+* fixed与absolute的定位区别
+  1.没有滚动条的情况下没有差异
+  2.在有滚动条的情况下，fixed定位不会随着滚动条的滚动而滚动，而absolute会随着滚动条的滚动而滚动。
 
 
 ### JS
@@ -88,3 +93,4 @@ d.IE10中，可以使用css属性 -ms-touch-action:none  禁止元素双击缩�
 ### 不足
 * 需要系统学习一下svg
 * 强化一下flex布局
+* 切换页面的效果不太好
