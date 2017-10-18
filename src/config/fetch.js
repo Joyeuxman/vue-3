@@ -1,51 +1,79 @@
-import {baseUrl} from './env'
+import {
+	baseUrl
+} from './env'
 
-export default (type = 'GET', url = '', data = {}) => {
-	return new Promise((resolve, reject) => { //返回一个promise
-		type = type.toUpperCase();
-		url = baseUrl + url
-		let requestObj = {
-			// 底层fetch默认不发送cookie,
-			// 加上credential:'include'之后，可实现发送cookie
+export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
+	type = type.toUpperCase();
+	url = baseUrl + url;
+
+	if (type == 'GET') {
+		let dataStr = ''; //数据拼接字符串
+		Object.keys(data).forEach(key => {
+			dataStr += key + '=' + data[key] + '&';
+		})
+
+		if (dataStr !== '') {
+			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
+			url = url + '?' + dataStr;
+		}
+	}
+
+	if (window.fetch && method == 'fetch') {
+		let requestConfig = {
 			credentials: 'include',
-		  	method: type,
-		  	headers: {
-		      	'Accept': 'application/json',
-      			'Content-Type': 'application/json'
-		  	},
-		  	mode: "no-cors",
+			method: type,
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			mode: "cors",
+			cache: "force-cache"
 		}
 
-		if (type == 'GET') {
-			let dataStr = ''; 
-			//将请求参数对象处理成key1=value1&key2=value2&的形式
-			Object.keys(data).forEach(key => {
-				dataStr += key + '=' + data[key] + '&';
-			})
-			// 将请求参数拼接到?后面
-			if (dataStr !== '') {
-				dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
-				url = url + '?' + dataStr;
-			}
-		}else if (type == 'POST') {
-			// 由于POST请求参数在body里边，为请求对象添加body对象属性
-			Object.defineProperty(requestObj, 'body', {
+		if (type == 'POST') {
+			Object.defineProperty(requestConfig, 'body', {
 				value: JSON.stringify(data)
 			})
-		}else {
-			reject('error type')
 		}
 		
-		fetch(url, requestObj).then(res => {
-		  	if (res.status == 200) {
-		      	return res.json()
-		  	} else {
-		      	return reject(res)
-		  	}
-		}).then(data => {
-		  	resolve(data);
-		}).catch(err => {
-		  	reject(err);
-		});
-	})
+		try {
+			const response = await fetch(url, requestConfig);
+			const responseJson = await response.json();
+			return responseJson
+		} catch (error) {
+			throw new Error(error)
+		}
+	} else {
+		return new Promise((resolve, reject) => {
+			let requestObj;
+			if (window.XMLHttpRequest) {
+				requestObj = new XMLHttpRequest();
+			} else {
+				requestObj = new ActiveXObject;
+			}
+
+			let sendData = '';
+			if (type == 'POST') {
+				sendData = JSON.stringify(data);
+			}
+
+			requestObj.open(type, url, true);
+			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			requestObj.send(sendData);
+
+			requestObj.onreadystatechange = () => {
+				if (requestObj.readyState == 4) {
+					if (requestObj.status == 200) {
+						let obj = requestObj.response
+						if (typeof obj !== 'object') {
+							obj = JSON.parse(obj);
+						}
+						resolve(obj)
+					} else {
+						reject(requestObj)
+					}
+				}
+			}
+		})
+	}
 }

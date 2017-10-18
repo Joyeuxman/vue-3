@@ -31,7 +31,8 @@ module.exports = {
     // localhost:3033/v1  --> https://mainsite-restapi.ele.me/v1
     proxyTable: {
       '/api':{
-        target:'https://mainsite-restapi.ele.me',
+        // target:'https://mainsite-restapi.ele.me',
+        target:'http://cangdu.org:8001',
         changeOrigin: true,
         pathRewrite: {
           '^/api/v1': '/v1',
@@ -39,6 +40,12 @@ module.exports = {
           '^/api/v3': '/v3',
           '^/api/v4': '/v4',
           '^/api/shopping': '/shopping',
+          '^/api/ugc': '/ugc',
+          '^/api/bos': '/bos',
+          '^/api/remeber': '/remeber',
+          '^/api/promotion': '/promotion',
+          '^/api/eus': '/eus',
+          '^/api/payapi': '/payapi',
         }
       }
     },
