@@ -62,6 +62,11 @@ const getImgPath = {
     // 传递过来的图片地址需要经过处理后才可以正常使用
     getImgPath(path) {
       let suffix;//图片后缀 --- suffix 后缀
+      if(!path){
+        return 'http://test.fe.ptdev.cn/elm/elmlogo.jpeg';
+      }
+      // strA.indexOf('strB') == -1  => strA 不包含 strB
+      // strA.indexOf('strB') !== -1  => strA 包含 strB
       if (path.indexOf('jpeg') !== -1) {
         suffix = '.jpeg';
       } else {
@@ -69,7 +74,7 @@ const getImgPath = {
       }
       // 拼接成饿了吗后台存放图片的地址
       const url = `/${path.substr(0, 1)}/${path.substr(1, 2)}/${path.substr(3)}${suffix}`;
-      return imgBaseUrl + url;
+      return 'https://fuss10.elemecdn.com' + url;
     }
   }
 }

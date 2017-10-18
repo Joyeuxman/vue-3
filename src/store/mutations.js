@@ -133,7 +133,7 @@ export default {
     document.cookie = `USERID=${info.user_id};expires=${now.toGMTString()}`;
     document.cookie = `SID=huRyTRd9QLij7NkbpHJoj3PQrx1eRiO6bAiw;expires=${now.toGMTString()}`;
   }
-  // 删除地址列表
+  // 保存地址列表
   ,[SAVE_ADDRESS](state,newAdress){
     state.removeAddress = newAdress;
   }
@@ -158,5 +158,9 @@ export default {
   // 会员卡价格记录
   ,[BUY_CART](state,price){
     state.cartPrice = price;
+  }
+  // 修改用户名
+  ,[RETSET_NAME](state,username){
+    state.userInfo = Object.assign({},state.userInfo,{username});
   }
 }

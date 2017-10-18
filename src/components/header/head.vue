@@ -26,7 +26,7 @@
     <slot name="changecity" />
     <!-- 切换城市 -->
     <slot name="edit" />
-    <!-- 切换城市 -->
+    <!-- 地址编辑 -->
     <slot name="changeLogin" />
     <!-- 切换登录方式 -->
   </header>

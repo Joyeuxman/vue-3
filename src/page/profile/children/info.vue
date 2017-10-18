@@ -6,7 +6,7 @@
         <input type="file" class="profileinfopanel-upload">
         <h2>头像</h2>
         <div class="headportrait-div">
-          <img :src="imgPath" alt="个人头像" v-if="avatarinfo" class="headportrait-div-top">
+          <img class="headportrait-div-top" :src="imgBaseUrl + userInfo.avatar" @click="uploadAvatar" alt="个人头像" v-if="userInfo">
           <span class="headportrait-div-top" v-else>
             <svg>
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default" />
@@ -44,9 +44,8 @@
           </div>
         </section>
       </router-link>
-
       <section class="bind-phone">绑定账号</section>
-      <router-link class="info-router" to="#">
+      <section class="info-router" @click="changePhone">
         <section class="headportrait headportraitwo headportraithree">
           <h2><img src="../../../images/bindphone.png" alt="手机图片" style="display:inline-block;margin-right:.4rem;">手机</h2>
           <div class="headportrait-div">
@@ -58,8 +57,7 @@
             </span>
           </div>
         </section>
-      </router-link>
-
+      </section>
       <section class="bind-phone">安全设置</section>
       <router-link class="info-router" to="/forget">
         <section class="headportrait headportraitwo headportraithree">
@@ -92,7 +90,8 @@
         </div>
       </section>
     </section>
-    <transition name="router-slid">
+    <alert-tip v-if="showAlert" @closeTip="showAlert = false" :alertText="alertText"></alert-tip>
+    <transition name="router-slide" mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
@@ -100,43 +99,58 @@
 
 
 <script>
-import headTop from '@/components/header/head';
 import { mapState, mapMutations } from 'vuex';
+import headTop from '@/components/header/head';
+import alertTip from '@/components/common/alertTip';
 import { imgBaseUrl } from '@/config/env';
+import { signout } from '@/service/getData';
+import { getImgPath } from '@/components/common/mixin';
+import { removeStore } from '@/config/mUtils';
+
 
 export default {
   name: 'info',
-  components: { headTop },
+  components: { headTop, alertTip },
   data() {
     return {
-      avatarinfo: '',//用户头像
-      username: '',//用户名
-      infotel: '',//用户手机号
-      getUsermes: {},//用户信息
-      show: false,
-      isEnter: true,
-      isLeave: false,
+      username: '',    //用户名
+      resetname: '', //重置用户名
+      infotel: '',     //用户手机
+      avatar: '',      //用户头像
+      show: false,     //显示提示框
+      isEnter: true,  //是否登录
+      isLeave: false, //是否退出
+      showAlert: false,
+      alertText: null,
       imgBaseUrl,
     }
   },
   computed: {
     ...mapState(['userInfo', 'imgPath']),
   },
-  created() {
-    this.getUsermes = this.userInfo;
-    if (this.userInfo) {
-      this.username = this.getUsermes.username;
-      this.infotel = this.getUsermes.mobile;
-      this.avatarinfo = this.getUsermes.avatar;
+  // 组件销毁之前
+  beforeDestroy() {
+    clearTimeout(this.timer);
+  },
+  mounted() {
+    console.log('this.userInfo===', this.userInfo);
+    const userInfo = this.userInfo;
+    if (userInfo && userInfo.user_id) {
+      this.username = userInfo.username;
+      this.infotel = userInfo.mobile;
+      this.avatar = userInfo.avatar;
     }
   },
   methods: {
     ...mapMutations(['OUT_LOGIN',]),
+    // 退出登录 按钮
     exitlogin() {
       this.show = true;
       this.isEnter = true;
       this.isLeave = false;
     },
+    // 再等等 按钮
+    // 200ms之后关闭弹框，记得要在组件销毁之前清除该延迟
     waitingThing() {
       clearTimeout(this.timer);
       this.isEnter = false;
@@ -146,10 +160,58 @@ export default {
         this.show = false;
       }, 200)
     },
-    outLogin() {
+    // 退出登录
+    async outLogin() {
       this.OUT_LOGIN();
       this.waitingThing();
       this.$router.go(-1);
+      removeStore('user_id');
+      await signout();
+    },
+    // 更换手机号
+    changePhone() {
+      this.showAlert = true;
+      this.alertText = '请在手机APP中设置';
+    },
+    // 上传头像 ???未实现
+    async uploadAvatar() {
+      if (true) {
+        const input = document.querySelector('.profileinfopanel-upload');
+        // new FormData()用于上传文件
+        // new FormData().append(key,value);key/value上传的健值对
+        let data = new FormData();
+        data.append('file', input.files[0]);
+        try {
+          const response = await fetch('/api/eus/v1/users/' + this.userInfo.user_id + '/avatar', {
+            method: 'POST',
+            credentials: 'include',
+            body: data,
+          })
+          let res = await response.json();
+          if (res.status = 1) {
+            this.userInfo.avatar = res.image_path;
+          }
+        } catch (e) {
+          this.showAlert = true;
+          this.alertText = '上传失败';
+          throw new Error(e);
+        }
+      }
+    }
+  },
+  watch: {
+    // 此处存在BUG,在setusername页面中，修改用户名之后，并没有触发watch中的userInfo,深度观察也不行，
+    // 采取折中的方法，在mounted钩子函数中，重新赋值。
+    userInfo: {
+      handler: function(value, oldValue) {
+        console.log('watch观察属性，newValue==', value, 'oldValue==', oldValue);
+        if (value && value.user_id) {
+          this.username = value.username;
+          this.infotel = value.mobile;
+          this.avatar = value.avatar;
+        }
+      },
+      deep: true,
     }
   }
 }
@@ -194,6 +256,9 @@ export default {
       @include sc(.6rem, #333);
     }
     .headportrait-div {
+      img {
+        @include sc(.6rem, #000);
+      }
       span {
         display: inline-block;
         svg {
@@ -330,15 +395,7 @@ body .coverpart .cover-animate-leave {
   animation: zoomOut .4s;
 }
 
-.router-sild-enter-active,
-.router-sild-leave-active {
-  transition: all .4s;
-}
 
-.router-sild-enter,
-.router-sild-leave-active {
-  transform: translateX(100%);
-}
 
 @keyframes bounceIn {
   0%,
@@ -360,27 +417,28 @@ body .coverpart .cover-animate-leave {
     transform: scale3d(.9, .9, .9);
   }
   60% {
-    opacity:1;
-    transform: scale3d(1.03,1.03,1.03);
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
   }
   80% {
     transform: scale3d(.97, .97, .97);
   }
   40% {
     opacity: 1;
-    transform: scale3d(1,1,1);
+    transform: scale3d(1, 1, 1);
   }
 }
+
 @keyframes zoomOut {
-  0%{
-    opacity:1;
+  0% {
+    opacity: 1;
   }
-  50%{
+  50% {
     opacity: 0;
-    transform:scale3d(.3,.3,.3);
+    transform: scale3d(.3, .3, .3);
   }
-  100%{
-    opacity:0;
+  100% {
+    opacity: 0;
   }
 }
 </style>

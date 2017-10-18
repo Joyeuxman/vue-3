@@ -80,3 +80,13 @@ html,body{
   height: 0px;
   background-color: #f5f5f5;
 }
+// 二级路由页面切换时的动画
+.router-slide-enter-active, .router-slide-leave-active {
+  transition: all .4s;
+}
+.router-slide-enter, .router-slide-leave-active {
+  // translate3d(2rem, 0, 0)效果比translateX(100%)更好
+  transform: translate3d(2rem, 0, 0);
+  // transform: translateX(100%);
+  opacity: 0;
+}

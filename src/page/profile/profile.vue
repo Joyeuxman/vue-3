@@ -133,7 +133,7 @@
         </router-link>
       </section>
     </section>
-    <transition name="router-slid">
+    <transition name="router-slide">
       <router-view/>
     </transition>
   </div>
@@ -149,9 +149,9 @@ export default {
   name: 'profile',
   data() {
     return {
-      profiletitle: '我的',//页面标题名
+      profiletitle: '我的账户',//页面标题名
       getUserInfo: {},//个人信息
-      username: '登录注册',//用户名
+      username: '登录/注册',//用户名
       mobile: '登陆后享受更多服务',//电话号码
       avatar: '',//头像地址
       imgBaseUrl,
@@ -163,41 +163,43 @@ export default {
   components: { headTop },
   mixins: [getImgPath],
   mounted() {
-    this.getUserInfo = this.userInfo;
-    if (this.userInfo) {
-      this.avatar = this.userInfo.avatar;
-      this.username = this.userInfo.username;
-      this.mobile = this.userInfo.mobile;
-      this.balance = this.userInfo.balance;
-      this.count = this.userInfo.gift_amount;
-      this.pointNumber = this.userInfo.point;
-    }
+    this.initData();
   },
   methods: {
-    ...mapMutations(['SAVE_AVANDER'])
+    ...mapMutations(['SAVE_AVANDER']),
+    initData() {
+      if (this.userInfo && this.userInfo.user_id) {
+        this.avatar = this.userInfo.avatar;
+        this.username = this.userInfo.username;
+        this.mobile = this.userInfo.mobile || '暂无绑定手机号';
+        this.balance = this.userInfo.balance;
+        this.count = this.userInfo.gift_amount;
+        this.pointNumber = this.userInfo.point;
+      }else{
+        this.username = '登录/注册';
+        this.mobile = '登陆后享受更多服务';
+      }
+    }
   },
   computed: {
     ...mapState(['userInfo']),
+    //后台会返回两种头像地址格式，分别处理
     imgPath() {
       let path;
-      if (this.avatar.indexOf('/') !== -1) {
+      // console.log('this.avatar===',this.avatar);
+      if (this.avatar.indexOf('/') == -1) {
         path = imgBaseUrl + this.avatar;
       } else {
         path = this.getImgPath(this.avatar);
       }
       this.SAVE_AVANDER(path);
+      // console.log('path===',path);
       return path;
     }
   },
   watch: {
     userInfo() {
-      this.getUserInfo = this.userInfo;
-      this.avatar = this.getUserInfo && this.getUserInfo.avatar || '';
-      this.username = this.getUserInfo && this.getUserInfo.username || '登录/注册';
-      this.mobile = this.getUserInfo && this.getUserInfo.mobile || '登陆后享受更多特权';
-      this.balance = this.getUserInfo && this.getUserInfo.balance || '0';
-      this.count = this.getUserInfo && this.getUserInfo.gift_amount || '0';
-      this.pointNumber = this.getUserInfo && this.getUserInfo.point || '0';
+      this.initData();
     }
   }
 }
@@ -223,6 +225,7 @@ export default {
     .privateImage {
       display: inline-block;
       border-radius: 50%;
+      @include sc(.7rem,#fff);
       @include wh(2.5rem, 2.5rem);
       .privateImage_svg {
         border-radius: 50%;
@@ -233,8 +236,8 @@ export default {
       flex: 1;
       margin-left: .5rem;
       p {
-        font-weight: 700;
-        @include sc(.8rem, #fff);
+        font-weight: 500;
+        @include sc(.7rem, #fff);
         .user_icon {
           display: inline-block;
           line-height: .75rem;
@@ -346,14 +349,7 @@ export default {
   .myorder:nth-of-type(3) .myorder_div {
     border: 0;
   }
-  .router-slid-enter-active,
-  .router-slid-leave-active {
-    transition: all .4s;
-  }
-  .router-slid-enter,
-  .router-slid-leave-active {
-    transform: translateX(100%);
-  }
+  
 }
 </style>
 
