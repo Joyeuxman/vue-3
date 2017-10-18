@@ -20,12 +20,12 @@
       <svg class="user_avatar" v-if="userInfo">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user" />
       </svg>
-      <span class="login_span">登录|注册</span>
+      <span class="login_span" v-else>登录|注册</span>
     </router-link>
     <!-- 登录|注册 -->
     <slot name="changecity" />
     <!-- 切换城市 -->
-    <!-- <slot name="edit" /> -->
+    <slot name="edit" />
     <!-- 切换城市 -->
     <slot name="changeLogin" />
     <!-- 切换登录方式 -->

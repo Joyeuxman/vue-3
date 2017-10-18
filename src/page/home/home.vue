@@ -10,6 +10,9 @@
       </div>
       <router-link class="guess_city" :to="`/city/${guessCityid}`">
         <span>{{guessCity}}</span>
+        <svg class="arrow_right">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
+        </svg>
       </router-link>
     </nav>
     <div id="hot_city_container">
@@ -43,6 +46,7 @@ import { cityGuess, hotcity, groupcity } from '@/service/getData'
 
 export default {
   name: 'home',
+  components: { headTop },
   data() {
     return {
       guessCity: '',//当前定位城市name
@@ -52,20 +56,22 @@ export default {
     }
   },
   created() {
+    // 获取当前城市
     cityGuess().then(res => {
       this.guessCity = res.name;
       this.guessCityid = res.id;
     })
+    // 获取热门城市
     hotcity().then(res => {
       this.hotcity = res;
     })
+    // 获取所有城市
     groupcity().then(res => {
       this.groupcity = res;
     })
   },
-  components: { headTop },
   computed: {
-    // 当sortgroupcity依赖的属性即this.groupcity发生变化时，就会触发该函数
+    // 当sortgroupcity依赖的属性即this.groupcity发生变化时，就会触发该函数，并将return的数据绑定到data中
     sortgroupcity() {
       // 按照A-Z的顺序将请求回来的城市数据放到sortgroupcity计算属性中
       // String.fromCharCode(num),将Unicode码转化为对应的字符串。
@@ -79,9 +85,15 @@ export default {
       return sortobj;
     }
   },
-  methods:{
+  methods: {
     // 点击饿了吗刷新页面
-    reload(){
+    // location.reload(force);
+    // 如果该方法没有规定参数，或者参数为false,他就会用HTTP头If-Modified-Since来检测服务器上的文档是否已经改变。
+    // 如果文档已改变，reload()会再次下载该文档。如果文档没有改变，则该方法姜葱缓存中装载文档。
+    // 这与用户单击浏览器的刷新按钮的效果相同。
+    // 如果该方法的参数设置为true，那么无论文档的最后修改日期是什么，它都会绕过缓存，从服务器上重新下载该文档。
+    // 这与用户在单击浏览器的刷新按钮时按住Shift键的效果是完全一样的。
+    reload() {
       window.location.reload();
     }
   }
@@ -100,6 +112,7 @@ export default {
   @include wh(2.3rem, 0.7rem);
   @include center-top;
 }
+
 
 .city_nav {
   margin-top: 2.35rem;
@@ -122,6 +135,7 @@ export default {
   .guess_city {
     display: flex;
     justify-content: space-between;
+    align-items:center;
     height: 1.8rem;
     padding: 0 0.45rem;
     border-top: 1px solid $bc;
@@ -132,6 +146,10 @@ export default {
     }
     span:nth-of-type(2) {
       color: #9f9f9f;
+    }
+    .arrow_right {
+      @include wh(.6rem, .6rem);
+      fill: #999;
     }
   }
 }
@@ -144,6 +162,7 @@ export default {
 .citylistul {
   li {
     float: left;
+    padding: 0 .2rem;
     border-bottom: 0.025rem solid $bc;
     border-right: 0.025rem solid $bc;
     text-align: center;
