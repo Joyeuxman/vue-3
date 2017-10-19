@@ -100,7 +100,7 @@ export default {
 
 .address_page {
   z-index: 202;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

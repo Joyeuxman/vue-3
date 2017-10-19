@@ -133,7 +133,6 @@ export default {
     clearTimeout(this.timer);
   },
   mounted() {
-    console.log('this.userInfo===', this.userInfo);
     const userInfo = this.userInfo;
     if (userInfo && userInfo.user_id) {
       this.username = userInfo.username;
@@ -204,7 +203,7 @@ export default {
     // 采取折中的方法，在mounted钩子函数中，重新赋值。
     userInfo: {
       handler: function(value, oldValue) {
-        console.log('watch观察属性，newValue==', value, 'oldValue==', oldValue);
+        // console.log('watch观察属性，newValue==', value, 'oldValue==', oldValue);
         if (value && value.user_id) {
           this.username = value.username;
           this.infotel = value.mobile;

@@ -1,32 +1,32 @@
 import {
-	RECORD_ADDRESS,
-	ADD_CART,
-	REDUCE_CART,
-	INIT_BUYCART,
-	CLEAR_CART,
-	RECORD_SHOPDETAIL,
-	RECORD_USERINFO,
-	GET_USERINFO,
-	CONFIRM_REMARK,
-	CONFIRM_INVOICE,
-	CHOOSE_SEARCH_ADDRESS,
-	SAVE_GEOHASH,
-	CHOOSE_ADDRESS,
-	NEED_VALIDATION,
-	SAVE_CART_ID_SIG,
-	SAVE_ORDER_PARAM,
-	CHANGE_ORDER_PARAM,
-	ORDER_SUCCESS,
-	SAVE_SHOPID,
-	SAVE_ORDER,
-	OUT_LOGIN,
-	RETSET_NAME,
-	SAVE_AVANDER,
-	SAVE_ADDRESS,
-	SAVE_ADDDETAIL,
-	SAVE_QUESTION,
-	ADD_ADDRESS,
-	BUY_CART,
+  RECORD_ADDRESS,
+  ADD_CART,
+  REDUCE_CART,
+  INIT_BUYCART,
+  CLEAR_CART,
+  RECORD_SHOPDETAIL,
+  RECORD_USERINFO,
+  GET_USERINFO,
+  CONFIRM_REMARK,
+  CONFIRM_INVOICE,
+  CHOOSE_SEARCH_ADDRESS,
+  SAVE_GEOHASH,
+  CHOOSE_ADDRESS,
+  NEED_VALIDATION,
+  SAVE_CART_ID_SIG,
+  SAVE_ORDER_PARAM,
+  CHANGE_ORDER_PARAM,
+  ORDER_SUCCESS,
+  SAVE_SHOPID,
+  SAVE_ORDER,
+  OUT_LOGIN,
+  RETSET_NAME,
+  SAVE_AVANDER,
+  SAVE_ADDRESS,
+  SAVE_ADDDETAIL,
+  SAVE_QUESTION,
+  ADD_ADDRESS,
+  BUY_CART,
 } from './mutation-type'
 import { getStore, setStore } from '@/config/mUtils'
 
@@ -124,43 +124,51 @@ export default {
     }
   }
   // 保存用户信息
-  ,[RECORD_USERINFO](state,info){
+  , [RECORD_USERINFO](state, info) {
     state.userInfo = info;
     state.login = true;
     let validity = 30;
     let now = new Date();
-    now.setTime(now.getTime() + validity*24*60*60*1000);
+    now.setTime(now.getTime() + validity * 24 * 60 * 60 * 1000);
     document.cookie = `USERID=${info.user_id};expires=${now.toGMTString()}`;
     document.cookie = `SID=huRyTRd9QLij7NkbpHJoj3PQrx1eRiO6bAiw;expires=${now.toGMTString()}`;
   }
+  // 增加地址
+  , [ADD_ADDRESS](state, newAdress) {
+    state.removeAddress = [newAdress, ...state.removeAddress];
+  }
   // 保存地址列表
-  ,[SAVE_ADDRESS](state,newAdress){
+  , [SAVE_ADDRESS](state, newAdress) {
     state.removeAddress = newAdress;
   }
+  //添加地址name
+	,[SAVE_ADDDETAIL](state, addAddress){
+		state.addAddress=addAddress;
+	}
   ,//保存图片
-  [SAVE_AVANDER](state,imgPath){
+  [SAVE_AVANDER](state, imgPath) {
     state.imgPath = imgPath;
   }
   ,//退出登录
-  [OUT_LOGIN](state){
+  [OUT_LOGIN](state) {
     state.userInfo = null;
     state.login = false;
   }
   ,//保存所选问题标题和详情
-  [SAVE_QUESTION](state,question){
-    state.question = {...question};
+  [SAVE_QUESTION](state, question) {
+    state.question = { ...question };
   }
   //下单成功，保存订单返回信息
-  ,[ORDER_SUCCESS](state,order){
+  , [ORDER_SUCCESS](state, order) {
     state.cartPrice = null;
     state.orderMessage = order;
   }
   // 会员卡价格记录
-  ,[BUY_CART](state,price){
+  , [BUY_CART](state, price) {
     state.cartPrice = price;
   }
   // 修改用户名
-  ,[RETSET_NAME](state,username){
-    state.userInfo = Object.assign({},state.userInfo,{username});
+  , [RETSET_NAME](state, username) {
+    state.userInfo = Object.assign({}, state.userInfo, { username });
   }
 }
