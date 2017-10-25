@@ -227,6 +227,7 @@ export default {
   bottom: 0;
   left: 0;
   padding-top: 1.95rem;
+  overflow-y: auto;
   background-color: #f2f2f2;
 }
 

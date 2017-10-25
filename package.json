@@ -10,6 +10,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "iscroll": "^5.2.0",
+    "better-scroll": "^0.1.15",
     "fastclick": "^1.0.6",
     "node-sass": "^4.5.3",
     "showdown": "^1.7.6",

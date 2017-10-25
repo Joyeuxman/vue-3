@@ -60,6 +60,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/mixin';
 #head_top {
+  z-index:100000;
   position: fixed;
   left: 0;
   top: 0;
@@ -68,9 +69,10 @@ export default {
 }
 
 .head_goback {
-  left: 0.4rem;
-  @include wh(0.6rem, 0.8rem);
-  @include center-top;
+  left: 0;
+  top: 0;
+  @include wh(2.6rem, 1.95rem);
+  padding: .5rem;
 }
 
 .head_login {

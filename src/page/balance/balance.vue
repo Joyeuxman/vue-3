@@ -7,7 +7,7 @@
           <span class="content_title_style">当前余额</span>
           <section class="content_description">
             <img src="../../images/description.png" alt="">
-            <router-link class="content_title_style" to="/balance/detail">余额说明</router-link>
+            <router-link class="content_title_style" to="/balance/balanceDetail">余额说明</router-link>
           </section>
         </header>
           <p class="content_num">
