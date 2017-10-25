@@ -128,15 +128,20 @@ export default [{
       path: '/balance', component: balance,//我的余额
       children: [{ path: 'balanceDetail', component: balanceDetail }]
     },
-    { path: '/benefit', component: benefit,
-    children: [
-      { path: 'hbDescription', component: hbDescription },//红包说明
-      { path: 'hbHistory', component: hbHistory },//红包历史
-      { path: 'exchange', component: exchange },//兑换红包
-      { path: 'commend', component: commend },//推荐有奖
-      { path: 'coupon', component: coupon },//代金券说明
-    ]},//我的优惠
-    { path: '/points', component: points },//我的积分
+    {
+      path: '/benefit', component: benefit,
+      children: [
+        { path: 'hbDescription', component: hbDescription },//红包说明
+        { path: 'hbHistory', component: hbHistory },//红包历史
+        { path: 'exchange', component: exchange },//兑换红包
+        { path: 'commend', component: commend },//推荐有奖
+        { path: 'coupon', component: coupon },//代金券说明
+      ]
+    },//我的优惠
+    {
+      path: '/points', component: points,//我的积分
+      children: [{ path: 'pointsDetail', component: pointsDetail, }]
+    },//积分说明
     {
       path: '/order', component: order,//我的订单
       children: [{ path: 'orderDetail', component: orderDetail, }]//订单详情页

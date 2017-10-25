@@ -125,12 +125,13 @@ export default {
     justify-content: space-between;
     align-items: center;
     line-height: 2rem;
-    padding-left: .7rem;
+    padding: 0 .7rem;
     border-bottom: 1px solid #f5f5f5;
     span {
       @include sc(.6rem, #666);
     }
     svg {
+      fill:#999;
       @include wh(.6rem, .6rem);
     }
   }
