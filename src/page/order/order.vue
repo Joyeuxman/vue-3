@@ -89,14 +89,14 @@ export default {
     async initData() {
       if (this.userInfo && this.userInfo.user_id) {
         const res = await getOrderList(this.userInfo.user_id, this.offset);
-        console.log("111111111111res===", res);
+        console.log('1111111',res);
         this.orderList = [...res];
       }
       this.hideLoading();
     },
     // 生产环境与发布环境隐藏loading方式不同
     hideLoading() {
-      this.showLoading = true;
+      this.showLoading = false;
     },
     // 加载更多
     async loaderMore() {
@@ -106,7 +106,7 @@ export default {
       this.offset += 10;
       // 获取信息
       const res = await getOrderList(this.userInfo.user_id, this.offset);
-      this.orderList = [...res];
+      this.orderList = [...this.orderList,...res];
       this.hideLoading();
       if (res.length < 10) return;
       this.preventRepeat = false;

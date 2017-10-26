@@ -171,4 +171,8 @@ export default {
   , [RETSET_NAME](state, username) {
     state.userInfo = Object.assign({}, state.userInfo, { username });
   }
+  //进入订单详情页前保存该订单信息
+	,[SAVE_ORDER](state, orderDetail) {
+		state.orderDetail = orderDetail;
+	}
 }

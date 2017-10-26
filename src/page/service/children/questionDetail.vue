@@ -40,7 +40,8 @@ export default {
   background-color:#fff;
 }
 .markdown{
-  padding:.2rem .7rem;
-  @include sc(.65rem,#666);
+  padding:.2rem .7rem ;
+  font-weight:normal;
+  @include sc(.6rem,#666);
 }
 </style>

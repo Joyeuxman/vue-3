@@ -66,7 +66,7 @@
           </div>
         </router-link>
         <!-- 积分商城 -->
-        <router-link class="myorder" to='/order'>
+        <a class="myorder" href='https://home.m.duiba.com.cn/#/chome/index'>
           <aside>
             <svg fill="#fc7b53">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#point"></use>
@@ -80,7 +80,7 @@
               </svg>
             </span>
           </div>
-        </router-link>
+        </a>
         <!-- 饿了吗会员 -->
         <router-link class="myorder" to='/vipcard'>
           <aside>
